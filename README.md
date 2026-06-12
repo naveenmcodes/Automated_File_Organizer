@@ -1,7 +1,11 @@
 Intern ID:CITS4529
+
 Name:Naveen M
+
 No. of weeks:4
+
 Project Name: Automated File Organizer
+
 Scope: A Python-based file organization tool that automatically sorts files into categorized folders such as Images, Documents, Videos, Audio, and Archives.
 
 Features:
