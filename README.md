@@ -1,38 +1,74 @@
-Intern ID:CITS4529
+import os
+import shutil
 
-Name:Naveen M
+# File categories
+FILE_TYPES = {
+    "Images": [".jpg", ".jpeg", ".png", ".gif", ".bmp"],
+    "Documents": [".pdf", ".docx", ".doc", ".txt", ".pptx", ".xlsx"],
+    "Videos": [".mp4", ".mkv", ".avi", ".mov"],
+    "Audio": [".mp3", ".wav", ".aac"],
+    "Archives": [".zip", ".rar", ".7z"]
+}
 
-No. of weeks:4
+folder_path = input("Your selected folder")
+if not folder_path:
+    print("You did not enter a folder path.")
+    exit()
+print("Selected folder:", folder_path)
+print("Files found:", os.listdir(folder_path))
 
-Project Name: Automated File Organizer
+if not os.path.exists(folder_path):
+    print("Folder does not exist!")
+    exit()
 
-Scope: A Python-based file organization tool that automatically sorts files into categorized folders such as Images, Documents, Videos, Audio, and Archives.
+moved_count = 0
 
-Features:
-- Automatically scans a selected folder
-- Organizes files based on file type
-- Creates folders automatically if they do not exist
-- Moves unknown file types to an "Others" folder
-- Displays the total number of files organized
+with open("log.txt", "a") as log:
 
-Technologies Used:
-- Python
-- os module
-- shutil module
+    for file in os.listdir(folder_path):
 
-Supported Categories:
-- Images (.jpg, .jpeg, .png, .gif, .bmp)
-- Documents (.pdf, .docx, .doc, .txt, .pptx, .xlsx)
-- Videos (.mp4, .mkv, .avi, .mov)
-- Audio (.mp3, .wav, .aac)
-- Archives (.zip, .rar, .7z)
+        file_path = os.path.join(folder_path, file)
 
-How to Run:
-1. Clone or download the repository.
-2. Open the project in PyCharm or any Python IDE.
-3. Run the Python script.
-4. Enter the folder path you want to organize.
-5. The files will be automatically sorted into their respective folders.
+        if not os.path.isfile(file_path):
+            continue
 
-Project Outcome:
-This project helps automate file management by reducing the time and effort required to manually organize files.
+        extension = os.path.splitext(file)[1].lower()
+
+        category_found = False
+
+        for category, extensions in FILE_TYPES.items():
+
+            if extension in extensions:
+
+                destination_folder = os.path.join(folder_path, category)
+
+                os.makedirs(destination_folder, exist_ok=True)
+
+                shutil.move(
+                    file_path,
+                    os.path.join(destination_folder, file)
+                )
+
+                log.write(f"{file} -> {category}\n")
+
+                moved_count += 1
+                category_found = True
+                break
+
+        if not category_found:
+
+            others_folder = os.path.join(folder_path, "Others")
+
+            os.makedirs(others_folder, exist_ok=True)
+
+            shutil.move(
+                file_path,
+                os.path.join(others_folder, file)
+            )
+
+            log.write(f"{file} -> Others\n")
+
+            moved_count += 1
+
+print("\nOrganization Complete!")
+print(f"Files moved: {moved_count}")
