@@ -28,6 +28,10 @@ Supported Categories:
 - Audio (.mp3, .wav, .aac)
 - Archives (.zip, .rar, .7z)
 
+Screenshot:
+<img width="1417" height="337" alt="Screenshot 2026-06-12 203425" src="https://github.com/user-attachments/assets/eface2e1-4fc9-4e36-a692-f63f02146410" />
+<img width="1407" height="737" alt="Screenshot 2026-06-12 203033" src="https://github.com/user-attachments/assets/b21f07a8-8ee4-4d90-b5dc-596313e74153" />
+
 How to Run:
 1. Clone or download the repository.
 2. Open the project in PyCharm or any Python IDE.
